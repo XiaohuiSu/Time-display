@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>时间显示器</title>
+		<meta charset="utf-8" />
+		<style>
+			body {
+				height: 900px;
+			}
+			.container {
+				width: 80%;
+				height: 800px;
+				margin-top: 10px;
+				margin: auto;
+				
+				text-align: center;
+				
+				overflow: hidden;
+				
+				background-color: powderblue;
+			}
+			/* 显示时间的盒子样式 */
+			.xianshi {
+				width: 40%;
+				padding: 20px;
+				
+				margin: auto;
+				margin-top: 100px;
+				
+				color: white;
+				background-color: gray;
+				
+				border-radius: 6px;
+				
+				-webkit-transition: 0.3s;
+				-ms-transition: 0.3s;
+				-moz-transition: 0.3s;
+				transition: 0.3s;
+			}
+			
+			h2 {
+				width: 40%;
+				
+				text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);
+				
+				background-color: white;
+				
+				/*此处若读者不太理解，可以参考张鑫旭的博客中的相关知识~*/
+				-webkit-transform: matrix(0.766044, -0.642788, 0.642788, 0.766044, -100, 50);
+				-ms-transform: matrix(0.766044, -0.642788, 0.642788, 0.766044, -100, 50);
+				transform: matrix(0.766044, -0.642788, 0.642788, 0.766044, -100, 50);
+			}
+			
+			
+			.xianshi:hover {
+				-webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+			}
+			
+			.xianshi:active {
+				border-radius: 50%;
+			}
+			/* 媒体查询屏幕尺寸 ，注意的是要把媒体查询和相似的类选择器放在一起*/
+			@media screen and (max-width: 900px) {
+				h2 {
+					width: 40%;
+					padding: 10px;
+					margin: 50px auto;
+					
+					border-radius: 50%;
+					
+					text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+					text-align: center;
+					
+					background-color: white;
+					
+					transform: none;
+				}
+			}
+			
+			.begin-animation {
+				height: 100%;
+				width: 100%;
+				border: 1px solid black;
+				
+				text-align: center;
+				
+				background-color: white;
+				opacity: 0;
+				
+				
+				position: fixed;
+				top: 0;
+				left: 0;
+				
+				animation-name: zoom;
+				animation-duration: 16s;
+			
+			}
+			@keyframes zoom{
+				from {
+					opacity: 0.5;
+				}
+				to {
+					opacity: 0;
+				
+				}
+			}
+	
+			.begin-animation span {
+				
+				font-style: italic;
+				font-size: 6em;
+				color: dimgrey;
+				
+				opacity: 0;
+				
+				position: absolute;
+				top: 40%;
+				left: 50%;
+				
+			}
+			.begin-animation span.insert-count3 {
+				animation-name: count;
+				animation-duration: 1s;
+				animation-timing-function: ease;
+				
+			}
+			.begin-animation span.insert-count2 {
+				animation-name: count;
+				animation-duration: 1s;
+				animation-delay: 2s;
+				animation-timing-function: ease;
+			}
+			.begin-animation span.insert-count1 {
+				animation-name: count;
+				animation-duration: 1s;
+				animation-delay: 4s;
+				animation-timing-function: ease;
+			}
+			.begin-animation span.insert-count0 {
+				animation-name: count;
+				animation-duration: 1s;
+				animation-delay: 6s;
+				animation-timing-function: ease;
+			}
+			
+			
+			@-webkit-keyframes count {
+				from {
+					color: black;
+					opacity: 1;
+					font-size: 20em;
+				}
+			
+				to {
+					color: dimgrey;
+					opacity: 0;
+					font-size: 3em;
+				}
+			}
+			@keyframes count {
+				from {
+					color: dimgrey;
+					opacity: 1;
+					font-size: 10em;
+					
+				}
+			
+				to {
+					opacity: 0;
+					font-size: 3em;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<h2>时间显示器</h2>
+			<div class="xianshi" onclick="myclick()">
+				<span class="year"></span>&nbsp-
+				<span class="month"></span>&nbsp-
+				<span class="date"></span>&nbsp;&nbsp
+				<span class="Sel"></span>
+				<span class="hour"></span>:
+				<span class="minute"></span>:
+				<span class="second"></span>
+			</div>
+		</div>
+		
+		<div class="begin-animation">
+			<span class="insert-count3">3</span>
+			<span class="insert-count2">2</span>
+			<span class="insert-count1">1</span>
+			<span class="insert-count0">0</span>
+			
+		</div>
+
+		<script>
+			
+			//先将浏览器窗口调小，再刷新是一个效果~
+			if(window.matchMedia("(max-width: 900px)").matches) {
+				document.querySelector(".Sel").innerHTML="<br/>";
+
+			} else {
+				document.querySelector(".Sel").innerHTML="";
+			}
+
+			function display() {
+				
+				var shijian = new Date();
+				var month=shijian.getMonth();
+				var date=shijian.getDate();
+				var hour=shijian.getHours();
+				var minute=shijian.getMinutes();
+				var second=shijian.getSeconds();
+				var g='';
+				
+				//当有一项为个位数时，需要补充一个‘0’，比如10:04
+				document.querySelector('.year').innerHTML = shijian.getFullYear();
+				if(month<10)
+				g="0";
+				document.querySelector('.month').innerHTML = g+(month+1);
+				g="";
+				if(date<10)
+				g+='0';
+				document.querySelector('.date').innerHTML = g+(date);
+				g='';
+				if(hour<10)
+				g+='0';
+				document.querySelector('.hour').innerHTML =g+hour;
+				g='';
+				if(minute<10)
+				g+='0';
+				document.querySelector('.minute').innerHTML = g+minute;
+				g='';
+				if(second<10)
+				g+='0';
+				document.querySelector('.second').innerHTML = g+second;
+
+			}
+			//为了能在浏览器刷新的瞬间显示时间！，这里的function是立即执行的
+			setTimeout(display(),1000);
+			
+			for(var i=0;i<999999;++i)
+			{
+				setTimeout("display()",1000);
+			}
+		
+		</script>
+	</body>
+	</html>
