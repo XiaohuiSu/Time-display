@@ -94,7 +94,7 @@
 				left: 0;
 				
 				animation-name: zoom;
-				animation-duration: 16s;
+				animation-duration: 20s;
 			
 			}
 			@keyframes zoom{
