@@ -209,7 +209,7 @@
 			
 			
 			var fade = function () {
-				var i=0;
+				var i = 1;
 				var display = function () {
 					var shijian = new Date();
 					var month=shijian.getMonth();
@@ -241,8 +241,7 @@
 					g+='0';
 					document.querySelector('.second').innerHTML = g+second;
 					
-					if (i < 9999) {
-						i++;
+					if (i) {
 						setTimeout(display,1000);
 					}
 						
